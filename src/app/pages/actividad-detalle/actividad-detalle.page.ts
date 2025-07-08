@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
@@ -16,7 +16,9 @@ import {
   templateUrl: './actividad-detalle.page.html',
   styleUrls: ['./actividad-detalle.page.scss'],
   imports: [
-    CommonModule, FormsModule,
+    CommonModule,
+    FormsModule,
+    HttpClientModule, // 🔹 Asegura que HttpClient funcione
     IonCard, IonCardHeader, IonCardContent, IonCardTitle,
     IonCol, IonGrid, IonRow,
     IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton,
@@ -40,8 +42,13 @@ export class ActividadDetallePage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get<any[]>('assets/data/actividades.json').subscribe(data => {
-      this.actividadesFiltradas = data.filter(a => a.categoria === this.categoriaSeleccionada);
+    this.http.get<any[]>('assets/data/actividades.json').subscribe({
+      next: (data) => {
+        this.actividadesFiltradas = data.filter(a => a.categoria === this.categoriaSeleccionada);
+      },
+      error: (err) => {
+        console.error('❌ Error cargando actividades.json:', err);
+      }
     });
   }
 
