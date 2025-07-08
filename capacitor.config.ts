@@ -5,8 +5,10 @@ const config: CapacitorConfig = {
   appName: 'MiAppDorada',
   webDir: 'www',
   // @ts-expect-error: bundledWebRuntime está permitido aunque no esté tipado
-  bundledWebRuntime: false
+  bundledWebRuntime: false,
+  server: {
+    androidScheme: 'http'  // ✅ Necesario para cargar archivos locales en Android
+  }
 };
 
 export default config;
-
