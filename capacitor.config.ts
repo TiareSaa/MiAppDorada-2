@@ -1,9 +1,12 @@
-import type { CapacitorConfig } from '@capacitor/cli';
+import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'com.miapp.dorada',
   appName: 'MiAppDorada',
-  webDir: 'www'
+  webDir: 'www',
+  // @ts-expect-error: bundledWebRuntime está permitido aunque no esté tipado
+  bundledWebRuntime: false
 };
 
 export default config;
+
